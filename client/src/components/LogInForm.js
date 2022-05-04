@@ -29,7 +29,7 @@ export default function LogInForm({setUser}) {
 
   //Fetch Assignment
   const logInFetch = () => {
-    fetch('/signup', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

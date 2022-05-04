@@ -1,8 +1,11 @@
-import React from 'react'
+import EditWalletCard from "../components/EditWalletCard"
 
 function WatchedWallets() {
+
   return (
-    <div>WatchedWallets</div>
+    <div>
+      <EditWalletCard />
+    </div>
   )
 }
 
