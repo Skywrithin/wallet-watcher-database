@@ -6,7 +6,7 @@ class CustomWalletsController < ApplicationController
     end
 
     def index
-        render json: CustomWallet.all, status: ok
+        render json: @current_user.custom_wallets, status: ok
     end
 
     def destroy

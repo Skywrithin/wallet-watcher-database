@@ -19,6 +19,30 @@ function EditWalletCard() {
     }
 
 
+
+    //Fetch Assignment
+    // const updateWallet = () => {
+    //     fetch( '/posts/'+postObject.id,{
+    //         method: 'PATCH',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             id: postObject.id,
+    //             content: formState.content
+    //         }),
+    //     }).then((r) => r.json()).then((data) => {
+    //         setPostObject(data)
+    //         navigate('/posts')
+    //     })
+    // }
+
+
+
+
+
+
+
     return (
         <div className="bg-white w-64 outline outline-4 outline-gray-600 rounded m-2">
             <form>

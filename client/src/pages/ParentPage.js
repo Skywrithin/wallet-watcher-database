@@ -10,11 +10,10 @@ export default function ParentPage() {
 
   //Basic Variable Assignment
   const isLoggedIn = () => {
-    console.log('ran')
-    if (userFetch()) {
-      console.log('truthy')
+    if (userData) {
+      return true
     } else {
-      console.log(userData)
+      return false
     }
   }
 
@@ -40,10 +39,10 @@ export default function ParentPage() {
   const logOutFetch = (e) => {
     fetch('/logout', {
       method: 'DELETE'
-    })
+    }).then(()=>setUserData(null))
   }
   const userFetch = (e) => {
-    fetch('/me').then(r => (r.json())).then(r => setUserData(r))
+    fetch('/me').then(r => (r.json())).then(setUserData)
   }
   // .then(r => (console.log(r)))
 
@@ -55,7 +54,7 @@ export default function ParentPage() {
         <button className='outline outline-2 bg-purple-700 w-6' onClick={callSidebar}>. H</button>
 
         <div className='grid grid-rows-1 grid-cols-2'>
-          {true
+          {isLoggedIn()
             ? <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white' onClick={logOutHandler}>LOGOUT</button>
             : <>  <button className='rounded outline outline-1 outline-black bg-blue-600 font-semibold text-white' onClick={callLogInForm}>Log In</button>
               <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white' onClick={callSignUpForm}>Sign Up</button>  </>
@@ -66,7 +65,7 @@ export default function ParentPage() {
       <div className='flex'>
         <div><Sidebar /></div>
         <Outlet />
-        <div className='width-max'>signup</div>
+        <div className='width-max'></div>
       </div>
 
     </div>

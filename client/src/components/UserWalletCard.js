@@ -13,15 +13,13 @@ export default function WalletCard({wallet}) {
   useEffect(() => {
     console.log(wallet)
   }, [wallet])
-  
-
-
 
     return (
       <div className="bg-white outline outline-4 outline-gray-600 rounded m-2">
       <div>Alias: {wall1et}</div>
       <div>Wallet: {wall1et}</div>
       <div>Balance: {wall1et}</div>
+      <div><button className="rounded outline outline-1 m-1" onClick={confirmHandler}>Edit</button><button className="rounded outline outline-1 m-1">Delete</button></div>
     </div>
     )
 
