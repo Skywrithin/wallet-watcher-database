@@ -1,0 +1,2 @@
+class WatchedWhalesController < ApplicationController
+end

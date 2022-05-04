@@ -1,0 +1,2 @@
+class WhaleWalletsController < ApplicationController
+end
