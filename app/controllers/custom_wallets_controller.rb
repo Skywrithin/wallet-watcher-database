@@ -2,11 +2,11 @@ class CustomWalletsController < ApplicationController
 
     def create
         wallet = CustomWallet.create!(wallet_params)
-        render json wallet, status: created
+        render json: wallet, status: :created
     end
 
     def index
-        render json: @current_user.custom_wallets, status: ok
+        render json: @current_user.custom_wallets, status: :ok
     end
 
     def destroy
@@ -23,7 +23,7 @@ class CustomWalletsController < ApplicationController
 
     private
         def wallet_params
-            params.permit(:user_id, :whale_wallet_id, :alias)
+            params.permit(:user_id, :wallet_address, :alias)
         end
 
         def finder

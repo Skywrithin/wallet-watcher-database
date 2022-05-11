@@ -3,8 +3,7 @@ import { useState } from "react";
 export default function NewWalletCard({currentUser}) {
 
     const initialformState = {
-        user_id: "",
-        wallet_address: "",
+        wallet_address: 0,
         alias: "",
         is_favorite: false
     }
@@ -17,11 +16,12 @@ export default function NewWalletCard({currentUser}) {
     }
     const confirmHandler = (e) => {
         e.preventDefault()
+        postNewWallet()
         
     }
 
     const postNewWallet = () => {
-        fetch( '/watched_whales',{
+        fetch( '/custom_wallets',{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -37,23 +37,21 @@ export default function NewWalletCard({currentUser}) {
     }
 
 
-
-
     return (
-        <div className="bg-white w-64 outline outline-4 outline-gray-600 rounded m-2">
-            <form>
-                <div className="outline outline-4">New Wallet</div>
+        <div className="bg-white w-64 outline outline-1 rounded m-4 ml-64 p-2">
+            <form className="lm-64">
+                <div className="outline outline-2 rounded">New Wallet</div>
                 
-                <label>Wallet Address:</label>
-                <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
+                <label className="flex font-semibold m-1 mt-2">Wallet Address:</label>
+                <input className="m-2 flex rounded bg-gray-100 drop-shadow"
                     type="text"
                     value={formState.wallet_address}
                     placeholder=" wallet_address"
                     name="wallet_address"
                     onChange={handleInput}
                 />
-                <label>Wallet Nickname:</label>
-                <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
+                <label className="flex font-semibold m-1 mt-2">Wallet Nickname:</label>
+                <input className="m-2 rounded bg-gray-100 drop-shadow"
                     type="text"
                     value={formState.alias}
                     placeholder=" alias"

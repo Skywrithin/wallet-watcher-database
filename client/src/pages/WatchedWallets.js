@@ -4,27 +4,18 @@ import { useState, useEffect } from "react"
 
 import WalletCard from "../components/WalletCard"
 
-function WatchedWallets({currentUser}) {
-  const [userWallets, setUserWallets] = useState([])
 
-  const userWalletsFetch = (e) => {
-    fetch('/custom_wallets', {
-      method: 'GET'
-    }).then(r=>r.json()).then(r=>(setUserWallets(r)))
-  }
+//Styles
+import { PageStyles } from "../hooks/Styles"
 
-  useEffect(() => {
-    userWalletsFetch()
-    console.log(userWallets)
-  }, [])
-  
-
+export default function WatchedWallets({ currentUser }) {
   return (
-    <div>
+      (<div className={PageStyles}>
       <NewWalletCard currentUser={currentUser}/>
-      {  userWallets.map(  (userWallet)=> { return( <WalletCard wallet={userWallet}/> ) }  )  }
-    </div>
+      <div className="( Your-Wallets ) bg-gray-100 rounded min-w-min w-64 m-4 p-1">
+        <div className="rounded bg-white outline outline-1 text-center p-1 m-1 text-blue-800 font-semibold"> Your Watched Wallets </div>
+          {currentUser ?  currentUser.custom_wallets.map( (userWallet)=> { return <WalletCard wallet={userWallet}/> }  ) : null}
+        </div>
+      </div>)
   )
 }
-
-export default WatchedWallets

@@ -1,22 +1,35 @@
+
+//The sidebar component is a hideable set of buttons on the side to navigate to different pages//
+
 import { useNavigate } from "react-router-dom"
 
-export default function Sidebar() {
 
-  //UseNavigate hook
+export default function Sidebar({ isSidebarActive }) {
+
+  //UseNavigate hook assignment
   const navigate = useNavigate();
 
-  //Navigate to endpoint base on the button name data
+  //Navigate to endpoint based on the button 'name' data
   const navigateHandler = (e) => {
     navigate(e.target.name)
   }
 
-  return (
-    <div className='(Sidebar Parent) Computed:( grid w-56 p-1 ) Style:( outline-1 bg-gray-300 ) absolute left-1/2 -translate-x-1/2' >
-        <button className='(Home   ) Computed:( m-1 ) Styles:( rounded outline outline-1 bg-blue-400   ) ' name={'/'}                onClick={navigateHandler} > Home </button>
-        <button className='(Wallets) Computed:( m-1 ) Styles:( rounded outline outline-1 bg-purple-400 ) ' name={'/watched-wallets'} onClick={navigateHandler} > Watched Wallets </button>
-        <button className='(Wallets) Computed:( m-1 ) Styles:( rounded outline outline-1 bg-blue-400   ) ' name={'/whales'} onClick={navigateHandler} > Whales </button>
-        <button className='(Wallets) Computed:( m-1 ) Styles:( rounded outline outline-1 bg-purple-400 ) ' name={'/wallet-finder'} onClick={navigateHandler} > Wallet-Finder </button>
-    </div>
-  )
+  const navigateAuthorizedUser = () => {
+    if
+  }
+
+  //Styles Assignment
+  const purpleButtonStyles = 'Computed:( m-1 w-56 h-8) Styles:( rounded outline outline-1 outline-gray-600 drop-shadow-lg bg-purple-600 text-lg  text-white )'
+  const blueButtonStyles =   'Computed:( m-1 w-56 h-8 ) Styles:( rounded outline outline-1 outline-gray-600 drop-shadow-lg bg-blue-500   text-lg  text-white )'
+
+    {if(isSidebarActive){ return (
+      <div className='(Sidebar Parent) Computed:( h-64 p-1 z-40  left-0 ) Style:( w-60 bg-gray-100 ) absolute top-10 ' >
+      <button className={blueButtonStyles}   name={'/'}                onClick={navigateHandler} > Home </button>
+      <button className={purpleButtonStyles} name={'/watched-wallets'} onClick={navigateHandler} > Watched Wallets </button>
+      <button className={blueButtonStyles}   name={'/whales'}          onClick={navigateHandler} > Whales </button>
+      <button className={purpleButtonStyles} name={'/wallet-finder'}   onClick={navigateHandler} > Wallet-Finder </button>
+      </div>)
+    }else{ return (
+      <></>
+    )}}
 }
-//The sidebar component is a hideable set of buttons on the side to navigate to different pages//

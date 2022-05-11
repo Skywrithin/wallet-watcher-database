@@ -1,10 +1,12 @@
 import LogInForm from "../components/LogInForm"
 
+//Styles 
+import { PageStyles } from "../hooks/Styles"
 
-export default function LogIn() {
+export default function LogIn({setCurrentUser}) {
   return (
-    <div className="flex justify-center rounded bg-gray-100 p-2  outline outline-1 ">
-        <LogInForm />
+    <div className={PageStyles}>
+        <LogInForm setCurrentUser={setCurrentUser}/>
     </div>
   )
 }

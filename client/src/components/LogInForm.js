@@ -3,11 +3,13 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export default function LogInForm({setUser}) {
+export default function LogInForm({ setCurrentUser }) {
 
   //Local State
-  const initialFormState = { username: "", password: ""}
+  const initialFormState = { username: "", password: "" }
   const [formState, setFormState] = useState(initialFormState)
+
+  const [stateErrors, setStateErrors] = useState([])
 
 
   //Hooks Assignment
@@ -17,13 +19,11 @@ export default function LogInForm({setUser}) {
   //Handler Assignments
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setFormState(formState => ({...formState, [name]: value}))
+    setFormState(formState => ({ ...formState, [name]: value }))
   }
   const logInHandler = (e) => {
     e.preventDefault()
     logInFetch()
-    setFormState(initialFormState)
-    navigate('/')
   }
 
 
@@ -37,40 +37,47 @@ export default function LogInForm({setUser}) {
       body: JSON.stringify({
         username: formState.username,
         password: formState.password,
-        password_confirmation: formState.password_confirmation
       }),
-    }).then((r) => r.json()).then(console.log)
+    }).then(res => {
+      if (res.ok) {
+        navigate('/')
+        setFormState(initialFormState)
+        res.json().then(setCurrentUser)
+      } else {
+        res.json().then(setStateErrors)
+
+      }
+    })
   }
 
 
-  return (
-    <div className="w-1/5 min-w-min min-h-min bg-white m-3 flex rounded outline outline-1 z-20 absolute left-1/2 -translate-x-1/2">
-      <div className="w-32 bg-blue-700"></div>
+  return ( //outine outline-4 rounded  p-2 w-fit bg-gray-200 object-none object-center
+    <div className="drop-shadow w-1/5 min-w-min min-h-min bg-white m-3 rounded z-20 object-center ">
 
-      <form className="w-96 p-4" onSubmit={logInHandler}>
-        <div className="p-3 bg-white w-64 rounded">
-          <p className="text-xl text-blue-700">Log in</p>
+      <form className="w-96  " onSubmit={logInHandler}>
+        <div className="p-3 bg-blue-700 rounded w-full">
+          <p className="text-2xl mb-6 font-semibold text-white">Log in</p>
         </div>
 
-        <div className="mt-11">
-          <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow" 
-          type="text"
-          value={formState.username}
-          placeholder=" username"
-          name="username"
-          onChange={handleInput}
+        <div className=" mt-4">
+          <input className="m-2 rounded bg-gray-100 drop-shadow"
+            type="text"
+            value={formState.username}
+            placeholder=" username"
+            name="username"
+            onChange={handleInput}
           />
 
           <input
-          className="m-2 mt-4 rounded bg-gray-100 drop-shadow" 
-          type="text"
-          value={formState.password}
-          placeholder=" Password"
-          name="password"
-          onChange={handleInput}
+            className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
+            type="password"
+            value={formState.password}
+            placeholder=" Password"
+            name="password"
+            onChange={handleInput}
           />
-
-          <button className="rounded-xl mt-4 m-1 p-1 text-lg w-48" type="submit">Continue</button>
+          {stateErrors.errors ? <div className="text-red">{stateErrors.errors[0]}</div> : null}
+          <button className="rounded-sm mt-4 m-2 outline-2 text-lg w-48 outline outline-1 font-medium text-blue-600" type="submit">Continue</button>
         </div>
       </form>
 

@@ -1,22 +1,15 @@
 import Sidebar from "../components/Sidebar"
 import ContentPreview1 from "../components/ContentPreview1"
 
+//Styles
+import { PageStyles } from "../hooks/Styles"
 
-function Home() {
 
-  //Fetch Assignments
-  const getWhaleWalletsFetch = (e) => {
-    fetch('/whale_wallets', {
-      method: 'GET'
-    })
-  }
-
+export default function Home({isLoggedIn, currentUser}) {
 
   return (
-    <div className="flex justify-center rounded bg-gray-100 p-2  outline outline-1 ">
-      <ContentPreview1 />
+    <div className={PageStyles}>
+      <ContentPreview1 isLoggedIn={isLoggedIn} currentUser={currentUser}/>
     </div>
   )
 }
-
-export default Home

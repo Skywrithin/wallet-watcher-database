@@ -1,35 +1,48 @@
-import { ethers } from "ethers";
-import WalletCard from "./WalletCard";
 import { useState, useEffect } from "react";
-// new ethers.providers.EtherscanProvider( [ network = "homestead" , [ apiKey ] ] )
 
-export default function ContentPreview1() {
-const [whaleData, setWhaleData] = useState([])
+import WalletCard from "./WalletCard";
+import WhaleCard from "./WhaleCard";
 
-const whalesFetch = (e) => {
-  fetch('/whale_wallets', {
-    method: 'GET'
-  }).then(r=>r.json()).then(r=>(setWhaleData(r)))
-}
+export default function ContentPreview1({ isLoggedIn, currentUser }) {
 
-useEffect(() => {
-  whalesFetch()
-}, [])
+  const [whaleData, setWhaleData] = useState([])
+  const [first, setfirst] = useState(currentUser)
+
+  const whalesFetch = (e) => {
+    fetch('/whale_wallets', {
+      method: 'GET'
+    }).then(r => r.json()).then(r => (setWhaleData(r)))
+  }
+
+  const walletCard = (UserObject) => {
+    return (<WalletCard wallet={UserObject} />)
+  }
+
+  const whaleCard = (whaleObject) => {
+    return (<WhaleCard wallet={whaleObject} />)
+  }
+
+  //Page Load
+  useEffect(() => {
+    whalesFetch()
+  }, [])
 
 
   return (
 
-    <div className="outine outline-4 rounded  p-2 w-fit bg-gray-200 grid grid-rows-1 grid-flow-col place-content-center">
+    <div className="rounded-sm left flex">
 
-        <div className="Large Wallets bg-gray-400 rounded min-w-min w-64 m-4 p-1">
-          <div className="rounded bg-white outline"> Whale Wallets </div>
-         {  whaleData.map(  (whaleObject)=> { return( <WalletCard wallet={whaleObject}/> ) }  )  }
-        </div>
+      <div className="bg-gray-100 rounded min-w-min w-64 m-4 p-1 ">
+        <div className="rounded flex bg-white outline outline-1 place-content-center m-1 font-bold"><div className="left-5 text-violet-800 m-1 ">Whale</div> <div className="m-1">Wallets</div>  </div>
+        {whaleData ? whaleData.map((whaleObject) => (whaleCard(whaleObject))) : null}
+      </div>
 
-        <div className="Your Wallets bg-gray-400 rounded min-w-min w-64 m-4 p-1">
-        <div className="rounded bg-white outline"> Your Watched Wallets </div>
-        </div>
-
+      {isLoggedIn() ? <div className="( Your-Wallets ) bg-gray-100 rounded min-w-min w-64 m-4 p-1">
+        <div className="rounded bg-white outline outline-1 text-center p-1 m-1 text-blue-800 font-semibold"> Your Watched Wallets </div>
+        {currentUser ? currentUser.custom_wallets.map((userdata) => (walletCard(userdata))) : null}
+      </div>
+        :
+        null}
     </div>
   )
 }

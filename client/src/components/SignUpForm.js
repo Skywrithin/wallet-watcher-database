@@ -9,6 +9,8 @@ export default function SignUpForm({ setUser }) {
   const initialFormState = { username: "", password: "", password_confirmation: "" }
   const [formState, setFormState] = useState(initialFormState)
 
+  const [stateErrors, setStateErrors] = useState([])
+
 
   //Hook Assignment
   const navigate = useNavigate();
@@ -19,16 +21,14 @@ export default function SignUpForm({ setUser }) {
     const { name, value } = e.target;
     setFormState(formState => ({ ...formState, [name]: value }))
   }
-  const SignInHandler = (e) => {
+  const signUpHandler = (e) => {
     e.preventDefault()
-    signUnFetch()
-    setFormState(initialFormState)
-    navigate('/')
+    signUpFetch()
   }
 
 
   //Fetch Assignment
-  const signUnFetch = () => {
+  const signUpFetch = () => {
     fetch('/signup', {
       method: 'POST',
       headers: {
@@ -39,20 +39,24 @@ export default function SignUpForm({ setUser }) {
         password: formState.password,
         password_confirmation: formState.password_confirmation
       }),
-    }).then((r) => r.json()).then(console.log)
+    }).then(res => {if(res.ok){
+      navigate('/')
+      setFormState(initialFormState)
+
+    } else{
+      res.json().then(setStateErrors)
+    }})
   }
 
-
   return (
-    <div className="w-1/5 min-w-min min-h-min bg-white m-3 flex rounded outline outline-1 z-20 absolute left-1/2 -translate-x-1/2">
-      <div className="w-32 bg-blue-700"></div>
+    <div className="drop-shadow-lg w-1/5 min-w-min min-h-min bg-white m-3 rounded outline outline-0 z-20 object-center ">
 
-      <form className="w-96 p-4" onSubmit={SignInHandler}>
-        <div className="p-3 bg-white w-64 rounded">
-          <p className="text-xl text-blue-700">Sign Up</p>
+      <form className="w-96 " onSubmit={signUpHandler}>
+        <div className="p-3 bg-violet-700 w-full rounded">
+          <p className="text-2xl mb-6 font-semibold text-white">Sign Up</p>
         </div>
-        <div className="mt-11">
-          <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
+        <div className="mt-4">
+          <input className="m-2 rounded bg-gray-100 drop-shadow"
             type="text"
             value={formState.username}
             placeholder=" username"
@@ -66,7 +70,7 @@ export default function SignUpForm({ setUser }) {
             placeholder=" Password"
             name="password"
             onChange={handleInput}
-          />
+          />  {/*return to change to password*/}
           <input
             className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
             type="text"
@@ -75,7 +79,9 @@ export default function SignUpForm({ setUser }) {
             name="password_confirmation"
             onChange={handleInput}
           />
-          <button className="rounded-xl mt-4 m-1 p-1 text-lg w-48" type="submit">Continue</button>
+          <button className="rounded-sm mt-4 m-2 outline-2 text-lg w-48 outline outline-1 font-medium text-purple-600" type="submit">Continue</button>
+          {/* <div>{stateErrors ? <div>{stateErrors.error[0]}</div> : null }</div>
+          <div>{stateErrors ? <div>{stateErrors.error[1]}</div> : null }</div> */}
         </div>
       </form>
 

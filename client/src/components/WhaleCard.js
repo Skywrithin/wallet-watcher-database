@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import { ethers } from "ethers";
 
-export default function WalletCard({wallet}) {
+export default function WhaleCard({wallet}) {
   const [walletBalance, setWalletBalance] = useState()
 
-  //Styles 
+  //Styles
   const boldFont = "font-semibold flex"
   const normalFont = "font-normal ml-2"
 
@@ -26,7 +26,7 @@ export default function WalletCard({wallet}) {
   }, [])
   
     return (
-      <div className="bg-white outline outline-2 outline-blue-600 rounded m-3 p-1">
+      <div className="bg-white outline outline-2 outline-purple-700 rounded m-3 p-1">
       <div className={boldFont} >Alias:   <div className={normalFont} >{wallet? wallet.alias: null}</div> </div>
       <div className={boldFont} >Address: <div className={normalFont} >{wallet? wallet.wallet_address: null}</div> </div>
       <div className={boldFont} >Balance: <div className={normalFont} >{walletBalance? ethers.utils.formatUnits(walletBalance, 'ether') +" ETH": "Loading..."}</div> </div>

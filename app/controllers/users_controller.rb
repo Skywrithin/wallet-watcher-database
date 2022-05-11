@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
     def show
         puts "showing"
-        current_user = @current_user
+        current_user = User.find(session[:user_id])
         render json: current_user, status: :ok
     end
 

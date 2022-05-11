@@ -1,8 +1,11 @@
 import SignUpForm from "../components/SignUpForm"
 
+//Styles
+import { PageStyles } from "../hooks/Styles"
+
 export default function SignUp() {
   return (
-    <div className="flex justify-center rounded bg-gray-100 p-2  outline outline-1 ">
+    <div className={PageStyles}>
         <SignUpForm />
     </div>
   )

@@ -37,12 +37,6 @@ function EditWalletCard() {
     //     })
     // }
 
-
-
-
-
-
-
     return (
         <div className="bg-white w-64 outline outline-4 outline-gray-600 rounded m-2">
             <form>
