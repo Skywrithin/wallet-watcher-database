@@ -583,6 +583,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 16rem;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .h-10 {
   height: 2.5rem;
 }
@@ -671,8 +675,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: center;
 }
 
-.gap-4 {
-  gap: 1rem;
+.gap-12 {
+  gap: 3rem;
 }
 
 .place-self-center {

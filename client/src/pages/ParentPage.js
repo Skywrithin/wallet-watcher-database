@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+
+//React Imports
+import { useState, useEffect } from 'react';
 import { Navigate, useNavigate, Outlet } from 'react-router-dom'
 
 //Icons
-// import {  } from 'react-icons/';
 import { BsStack } from 'react-icons/bs';
 import { FaReact } from 'react-icons/fa';
 import { FaEthereum } from 'react-icons/fa';
@@ -12,18 +13,25 @@ import { SiTailwindcss } from 'react-icons/si';
 import Sidebar from '../components/Sidebar';
 
 
-export default function ParentPage({currentUser, setCurrentUser, }) {
+export default function ParentPage({ currentUser, setCurrentUser, }) {
 
   //Sidebar State
   const [isSidebarActive, setIsSidebarActive] = useState(false)
   const toggleSidebar = () => {
     setIsSidebarActive(isSidebarActive => !isSidebarActive)
-    console.log('toggled sidebar')
-    console.log(isSidebarActive)
   }
 
   //Hook Assignment
   const navigate = useNavigate();
+
+  //Basic Variable Assignment
+  const isLoggedIn = () => {
+    if (currentUser) {
+      return (true)
+    } else {
+      return (false)
+    }
+  }
 
 
   //Navigation assignment
@@ -47,19 +55,31 @@ export default function ParentPage({currentUser, setCurrentUser, }) {
   }
   console.log(BsStack)
 
+  const navigateTailwind = () => {
+    window.location.replace('https://tailwindcss.com')
+  }
+
+  const navigateEthersJs = () => {
+    window.location.replace('https://docs.ethers.io/v5/')
+  }
+
+  const navigateReact = () => {
+    window.location.replace('https://reactjs.org/')
+  }
+
 
   return (
-    <div className='bg-gray-300 relative  outline outline-1 '>
+    <div className='bg-gray-300 relative h-screen outline outline-1 '>
 
-      <div className='bg-gray-100 p-2 top-11 w-full sticky h-10 top-0 outline outline-blue-500 z-50 flex grid grid-rows-1 grid-flow-col gap-4 '>
+      <div className='bg-gray-100 p-2 top-11 w-full sticky h-10 top-0 outline outline-blue-500 z-50 flex grid grid-rows-1 grid-flow-col gap-12 '>
 
-          <button className='outline outline-1 bg-purple-700 text-center w-7 rounded p-1' onClick={toggleSidebar}><BsStack style={{color: "white", fontSize: "1.2em"}}/></button>
-          <div className='flex text-justify'>{<FaReact className='m-1' style={{color: "blue"}} />}React-v17.1, React-Router-v6.3, React-Icons{<FaReact className='m-1' style={{color: "blue"}} />}</div>
-          <div className='flex text-justify'>{<FaEthereum className='m-1'/>}EtherscanAPI with EthersJS{<FaEthereum className='m-1'/>}</div>
-          <div className='flex text-justify'>{<SiTailwindcss className='m-1' style={{color:' #57bfff'}}/>}Tailwind{<SiTailwindcss className='m-1' style={{color:' #57bfff'}}/>}</div>
+        <button className='outline outline-1 bg-purple-700 text-center w-7 rounded p-1' onClick={toggleSidebar}><BsStack style={{ color: "white", fontSize: "1.2em" }} /></button>
+        <button className='flex text-justify  w-fit' onClick={navigateReact}>{<FaReact className='m-1' style={{ color: "blue" }} />}React-v17.1, React-Router-v6.3{<FaReact className='m-1' style={{ color: "blue" }} />}</button>
+        <button className='flex text-justify  w-fit' onClick={navigateEthersJs}>{<FaEthereum className='m-1' />}EtherscanAPI with EthersJS{<FaEthereum className='m-1' />}</button>
+        <button className='flex text-justify  w-fit' onClick={navigateTailwind}>{<SiTailwindcss className='m-1' style={{ color: ' #57bfff' }} />}Tailwind{<SiTailwindcss className='m-1' style={{ color: ' #57bfff' }} />}</button>
 
         <div className='max-w-lg float-right ml-8 justify-self-right'>
-          {!currentUser ? (<>
+          {!isLoggedIn() ? (<>
             <button className='rounded outline outline-1 outline-black bg-blue-600 font-semibold text-white -mr-4 w-40' onClick={callLogInForm}>Log In</button>
             <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white w-32' onClick={callSignUpForm}>Sign Up</button>
           </>)
@@ -67,7 +87,7 @@ export default function ParentPage({currentUser, setCurrentUser, }) {
             <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white w-24' onClick={logOutHandler}>Logout</button>
           }
         </div>
-        <Sidebar isSidebarActive={isSidebarActive} is/>
+        <Sidebar isSidebarActive={isSidebarActive} currentUser={currentUser} />
       </div>
 
       <Outlet />

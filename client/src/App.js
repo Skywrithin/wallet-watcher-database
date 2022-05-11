@@ -28,13 +28,13 @@ export default function App() {
 
   //Variable Assignment
   const isLoggedIn = () => {
-    if(currentUser){
-      return(true)
+    if (currentUser) {
+      return (true)
     } else {
-      return(false)
+      return (false)
     }
   }
-  
+
   //Fetch Assignments
   const getMeFetch = () => {
     fetch('/me')
@@ -46,16 +46,16 @@ export default function App() {
           console.log('Not logged In')
         }
       })
-    }
-  
-    // const getNewestWhaleTransaction = () => {
-    //   fetch('https://api.whale-alert.io/v1/status', {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-WA-API-KEY': 'HxeUjz0ujc9FLs9t1LtOimebYCYTKs5C'
-    //   }
-    //   })
-    // }
+  }
+
+  // const getNewestWhaleTransaction = () => {
+  //   fetch('https://api.whale-alert.io/v1/status', {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-WA-API-KEY': 'HxeUjz0ujc9FLs9t1LtOimebYCYTKs5C'
+  //   }
+  //   })
+  // }
 
   //On-page-load:
   useEffect(() => {
@@ -68,18 +68,17 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/"  element={<ParentPage currentUser={currentUser} setCurrentUser={setCurrentUser} />}>  {/*Parent Route/Source */}
-          <Route path=""                element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />} />             {/*Home Page*/}
-          <Route path="watched-wallets" element={<WatchedWallets currentUser={currentUser} />} /> {/*Watched Wallets*/}
-          <Route path="wallet-finder"   element={<WalletFinder />} />                                                       {/*Wallet Finder, Not Completed Yet*/}
-          
-          <Route path="whales"          element={<Whales />} >
+        <Route path="/" element={<ParentPage currentUser={currentUser} setCurrentUser={setCurrentUser} />}>    {/*Parent Route/Source */}
+          <Route path="" element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />} /> {/*Home Page*/}
+          <Route path="watched-wallets" element={<WatchedWallets currentUser={currentUser} />} />               {/*Watched Wallets*/}
+          <Route path="wallet-finder" element={<WalletFinder />} />                                           {/*Wallet Finder, Not Completed Yet*/}
+
+          <Route path="whales" element={<Whales />} >
             {/* Whale user data  */}
           </Route>
 
-
-          <Route path="login"           element={<LogIn setCurrentUser={setCurrentUser}/>} />   {/*login Wallets*/}
-          <Route path="/signup"         element={<SignUp setCurrentUser={setCurrentUser}/>} />  {/*sign up Wallets*/}
+          <Route path="login" element={<LogIn setCurrentUser={setCurrentUser} />} />   {/*login Wallets*/}
+          <Route path="/signup" element={<SignUp setCurrentUser={setCurrentUser} />} />  {/*sign up Wallets*/}
 
           <Route path="*" element={<PageNotFound />} />
         </Route>

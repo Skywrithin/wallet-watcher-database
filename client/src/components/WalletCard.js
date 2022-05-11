@@ -34,7 +34,3 @@ export default function WalletCard({wallet}) {
     )
 
 }
-// message: "NOTOK"
-// result: "2113030002434567800000000"
-// status: "1"
-

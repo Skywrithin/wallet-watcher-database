@@ -1,73 +1,52 @@
-function EditWalletCard() {
-    // const initialFormState = postObject ? {community: postObject.category.id , title: postObject.title, content: postObject.content } : null
+//The edit-wallet
 
-    const formState = {
-        user_id: "1",
-        wallet_address: "0xda9dfa130df4de4673b89022ee50ff26f6ea73cf",
-        alias: "Kaleb",
-        is_favorite: true
-    }
+//React Imports
+import { useState, useEffect } from "react"
 
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        // setFormState(formState => ({...formState, [name]: value}))
-    }
-
-    const confirmHandler = (e) => {
-        e.preventDefault()
-
-    }
+//Library Imports
+import { ethers } from "ethers";
 
 
+export default function EditWalletCard({wallet}) {
+  const [walletBalance, setWalletBalance] = useState()
 
-    //Fetch Assignment
-    // const updateWallet = () => {
-    //     fetch( '/posts/'+postObject.id,{
-    //         method: 'PATCH',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             id: postObject.id,
-    //             content: formState.content
-    //         }),
-    //     }).then((r) => r.json()).then((data) => {
-    //         setPostObject(data)
-    //         navigate('/posts')
-    //     })
-    // }
+  //Styles
+  const boldFont = "font-semibold flex"
+  const normalFont = "font-normal ml-2"
 
+  //Basic Variable Assignment
+  const url = `https://api.etherscan.io/api?module=account&action=balance&address=${wallet.wallet_address}&tag=latest&apikey=5JJTINSZ38FFRH9VRUDJXHTNW6W8SF3TFC`
+  
+  //Fetch Assignment
+  const userWalletFetch = () => {
+    fetch(url).then(r => r.json()).then(r => {
+      if(r.message == "OK"){
+        setWalletBalance(r.result)
+      } else {
+        setTimeout(()=> userWalletFetch(),500)
+      }
+    })
+  }
+  const editFormFetch = () => {
+
+  }
+  const deleteWalletFetch = () => {
+
+  }
+
+  //On Page Load:
+  useEffect(() => {
+    // userWalletFetch() (For Development)
+  }, [])
+  
     return (
-        <div className="bg-white w-64 outline outline-4 outline-gray-600 rounded m-2">
-            <form>
-                <label>User</label>
-                <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
-                    type="text"
-                    value={formState.user_id}
-                    placeholder=" alias"
-                    name="alias"
-                    onChange={handleInput}
-                />
-                <label>Wallet Address:</label>
-                <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
-                    type="text"
-                    value={formState.wallet_address}
-                    placeholder=" wallet"
-                    name="wallet"
-                    onChange={handleInput}
-                />
-                <label>Wallet Nickname:</label>
-                <input className="m-2 mt-4 rounded bg-gray-100 drop-shadow"
-                    type="text"
-                    value={formState.alias}
-                    placeholder=" alias"
-                    name="alias"
-                    onChange={handleInput}
-                />
-                <div><button className="rounded outline outline-1 m-1" onClick={confirmHandler}>Confirm</button><button className="rounded outline outline-1 m-1">Cancel</button></div>
-            </form>
-        </div>
+      <div className="bg-white outline outline-2 outline-blue-600 rounded m-3 p-1">
+      <div className={boldFont} >Alias:   <div className={normalFont} >{wallet? wallet.alias: null}</div> </div>
+      <div className={boldFont} >Address: <div className={normalFont} >{wallet? wallet.wallet_address: null}</div> </div>
+      <div className={boldFont} >Balance: <div className={normalFont} >{walletBalance? ethers.utils.formatUnits(walletBalance, 'ether') +" ETH": "Loading..."}</div> </div>
+      <div><button className="outline outline-1 rounded m-2">Edit</button><button className="outline outline-1 rounded m-2">Delete</button></div>
+    </div>
     )
+
 }
 
-export default EditWalletCard
