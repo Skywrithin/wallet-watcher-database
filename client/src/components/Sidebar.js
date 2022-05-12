@@ -32,7 +32,6 @@ export default function Sidebar({ isSidebarActive, currentUser }) {
   const purpleButtonStyles = 'Computed:( m-1 w-56 h-8) Styles:( rounded outline outline-1 outline-gray-600 drop-shadow-lg bg-purple-600 text-lg  text-white )'
   const blueButtonStyles = 'Computed:( m-1 w-56 h-8 ) Styles:( rounded outline outline-1 outline-gray-600 drop-shadow-lg bg-blue-500   text-lg  text-white )'
 
-  {
     if (isSidebarActive) {
       return (
         <div className='(Sidebar Parent) Computed:( h-64 p-1 z-40  left-0 ) Style:( w-60 bg-gray-100 ) absolute top-10 ' >
@@ -46,5 +45,4 @@ export default function Sidebar({ isSidebarActive, currentUser }) {
         <></>
       )
     }
-  }
 }

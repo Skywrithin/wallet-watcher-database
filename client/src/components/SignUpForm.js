@@ -48,6 +48,8 @@ export default function SignUpForm({ setUser }) {
     }})
   }
 
+  console.log(stateErrors.error)
+
   return (
     <div className="drop-shadow-lg w-1/5 min-w-min min-h-min bg-white m-3 rounded outline outline-0 z-20 object-center ">
 
@@ -79,9 +81,8 @@ export default function SignUpForm({ setUser }) {
             name="password_confirmation"
             onChange={handleInput}
           />
+          <div>{stateErrors.error ? stateErrors.error.map((error)=> { return <div className="m-1 ">{error}</div>}) : null }</div>
           <button className="rounded-sm mt-4 m-2 outline-2 text-lg w-48 outline outline-1 font-medium text-purple-600" type="submit">Continue</button>
-          {/* <div>{stateErrors ? <div>{stateErrors.error[0]}</div> : null }</div>
-          <div>{stateErrors ? <div>{stateErrors.error[1]}</div> : null }</div> */}
         </div>
       </form>
 

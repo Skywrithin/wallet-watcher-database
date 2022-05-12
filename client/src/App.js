@@ -9,11 +9,16 @@ import Home from "./pages/Home";
 import WatchedWallets from "./pages/WatchedWallets";
 import WalletFinder from "./pages/WalletFinder"
 import Whales from "./pages/Whales";
+import Wallet from "./pages/Wallet";
 
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 
 import PageNotFound from "./pages/PageNotFound";
+
+//Keys
+import { EtherscanApiKey } from "./hooks/Keys";
+import { WhaleWatcherApiKey } from "./hooks/Keys";
 
 
 // Style Sheet
@@ -22,9 +27,9 @@ import './App.css';
 
 export default function App() {
 
-  //User State
+  //State Assignment
   const [currentUser, setCurrentUser] = useState()
-
+  const [currentEthPrice, setCurrentEthPrice] = useState(1)
 
   //Variable Assignment
   const isLoggedIn = () => {
@@ -47,45 +52,48 @@ export default function App() {
         }
       })
   }
-
-  // const getNewestWhaleTransaction = () => {
-  //   fetch('https://api.whale-alert.io/v1/status', {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'X-WA-API-KEY': 'HxeUjz0ujc9FLs9t1LtOimebYCYTKs5C'
-  //   }
-  //   })
-  // }
+  const getNewestWhaleTransaction = () => {
+    fetch('https://cors-anywhere.herokuapp.com/https://api.whale-alert.io/v1/status', {
+      headers: {
+        'Origin': 'http://localhost:4000', //Need to be changed for deployment
+        'Content-Type': 'application/json',
+        'X-WA-API-KEY': WhaleWatcherApiKey
+      }
+    }).then(r => r.json()).then(console.log)
+  }
+  const getLatestEthPrice = () => {
+    fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${EtherscanApiKey}`).then(res => res.json()).then(res => setCurrentEthPrice(res.result.ethusd))
+  }
 
   //On-page-load:
   useEffect(() => {
     getMeFetch()
-    isLoggedIn() //Remove later
-    // getMeFetchtest()
+    isLoggedIn() //Remove later (for development)
+    getNewestWhaleTransaction()
+    getLatestEthPrice()
   }, [])
+  console.log(currentEthPrice)
 
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ParentPage currentUser={currentUser} setCurrentUser={setCurrentUser} />}>    {/*Parent Route/Source */}
-          <Route path="" element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser} />} /> {/*Home Page*/}
-          <Route path="watched-wallets" element={<WatchedWallets currentUser={currentUser} />} />               {/*Watched Wallets*/}
-          <Route path="wallet-finder" element={<WalletFinder />} />                                           {/*Wallet Finder, Not Completed Yet*/}
-
+        <Route path="/" element={<ParentPage currentUser={currentUser} setCurrentUser={setCurrentUser} currentEthPrice={currentEthPrice} />}>  {/*Parent Route/Source */}
+          <Route path="" element={<Home />} />           {/*Home Page*/}
+          <Route path="watched-wallets" element={<WatchedWallets />} /> {/*Watched Wallets*/}
+          <Route path="wallet-finder" element={<WalletFinder />} >    {/*Wallet Finder, Not Completed Yet*/}
+            <Route path=':walletAddress' element={<Wallet />} />
+          </Route>
           <Route path="whales" element={<Whales />} >
             {/* Whale user data  */}
           </Route>
 
-          <Route path="login" element={<LogIn setCurrentUser={setCurrentUser} />} />   {/*login Wallets*/}
-          <Route path="/signup" element={<SignUp setCurrentUser={setCurrentUser} />} />  {/*sign up Wallets*/}
+          <Route path="login" element={<LogIn setCurrentUser={setCurrentUser} />} />    {/*login Wallets*/}
+          <Route path="/signup" element={<SignUp setCurrentUser={setCurrentUser} />} /> {/*sign up Wallets*/}
 
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<PageNotFound />} /> {/*Page-not-found display/redirect*/}
         </Route>
       </Routes>
     </Router>
   );
 }
-
-//For later:
-//sidebarState={isSidebarActive} toggleSidebar={toggleSidebar} 

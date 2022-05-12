@@ -1,12 +1,10 @@
-import React from 'react'
+import { PageStyles } from "../hooks/Styles"
 
-function PageNotFound() {
+export default function PageNotFound() {
   return (
-    <div className=''>
-        <h1>Error: 404</h1>
-        <h2>Page Not Found</h2>
+    <div className='justify-center' >
+        <h1 className="m-1">Error: 404</h1>
+        <h2 className="m-1">Page Not Found</h2>
     </div>
   )
 }
-
-export default PageNotFound

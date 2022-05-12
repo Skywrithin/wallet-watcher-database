@@ -1,7 +1,7 @@
 
 //React Imports
 import { useState, useEffect } from 'react';
-import { Navigate, useNavigate, Outlet } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 
 //Icons
 import { BsStack } from 'react-icons/bs';
@@ -13,7 +13,7 @@ import { SiTailwindcss } from 'react-icons/si';
 import Sidebar from '../components/Sidebar';
 
 
-export default function ParentPage({ currentUser, setCurrentUser, }) {
+export default function ParentPage({ currentUser, setCurrentUser, currentEthPrice }) {
 
   //Sidebar State
   const [isSidebarActive, setIsSidebarActive] = useState(false)
@@ -53,7 +53,6 @@ export default function ParentPage({ currentUser, setCurrentUser, }) {
       method: 'DELETE'
     }).then(() => setCurrentUser(null))
   }
-  console.log(BsStack)
 
   const navigateTailwind = () => {
     window.location.replace('https://tailwindcss.com')
@@ -71,7 +70,7 @@ export default function ParentPage({ currentUser, setCurrentUser, }) {
   return (
     <div className='bg-gray-300 relative h-screen outline outline-1 '>
 
-      <div className='bg-gray-100 p-2 top-11 w-full sticky h-10 top-0 outline outline-blue-500 z-50 flex grid grid-rows-1 grid-flow-col gap-12 '>
+      <div className='bg-gray-100 p-2 top-11 w-full sticky top-0 outline outline-blue-500 z-50 flex grid grid-rows-1 grid-flow-col gap-12 '>
 
         <button className='outline outline-1 bg-purple-700 text-center w-7 rounded p-1' onClick={toggleSidebar}><BsStack style={{ color: "white", fontSize: "1.2em" }} /></button>
         <button className='flex text-justify  w-fit' onClick={navigateReact}>{<FaReact className='m-1' style={{ color: "blue" }} />}React-v17.1, React-Router-v6.3{<FaReact className='m-1' style={{ color: "blue" }} />}</button>
@@ -84,13 +83,16 @@ export default function ParentPage({ currentUser, setCurrentUser, }) {
             <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white w-32' onClick={callSignUpForm}>Sign Up</button>
           </>)
             :
-            <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white w-24' onClick={logOutHandler}>Logout</button>
+            (<div className='flex'>
+              <div className='mr-4 text-blue text-bold'>Weclome, {currentUser.username}</div>
+              <button className='rounded outline outline-1 outline-black bg-purple-600 font-semibold text-white w-24' onClick={logOutHandler}>Logout</button>
+            </div>)
           }
         </div>
         <Sidebar isSidebarActive={isSidebarActive} currentUser={currentUser} />
       </div>
 
-      <Outlet />
+      <Outlet context={[currentUser, currentEthPrice]} />
 
     </div>
   )

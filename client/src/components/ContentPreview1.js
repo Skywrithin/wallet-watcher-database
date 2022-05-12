@@ -3,10 +3,17 @@ import { useState, useEffect } from "react";
 import WalletCard from "./WalletCard";
 import WhaleCard from "./WhaleCard";
 
-export default function ContentPreview1({ isLoggedIn, currentUser }) {
+export default function ContentPreview1({ currentUser, currentEthPrice }) {
 
   const [whaleData, setWhaleData] = useState([])
-  const [first, setfirst] = useState(currentUser)
+  
+  const isLoggedIn = () => {
+    if (currentUser) {
+      return (true)
+    } else {
+      return (false)
+    }
+  }
 
   const whalesFetch = (e) => {
     fetch('/whale_wallets', {
@@ -15,12 +22,13 @@ export default function ContentPreview1({ isLoggedIn, currentUser }) {
   }
 
   const walletCard = (UserObject) => {
-    return (<WalletCard wallet={UserObject} />)
+    return (<WalletCard wallet={UserObject} currentEthPrice={currentEthPrice}/>)
+  }
+  const whaleCard = (whaleObject) => {
+    return (<WhaleCard wallet={whaleObject} currentEthPrice={currentEthPrice} />)
   }
 
-  const whaleCard = (whaleObject) => {
-    return (<WhaleCard wallet={whaleObject} />)
-  }
+
 
   //Page Load
   useEffect(() => {

@@ -18,7 +18,7 @@ class CustomWalletsController < ApplicationController
     def update
         wallet = finder
         wallet.update(wallet_params)
-        render json: post, status: :ok
+        render json: wallet, status: :ok
     end
 
     private

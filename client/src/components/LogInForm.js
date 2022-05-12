@@ -51,7 +51,7 @@ export default function LogInForm({ setCurrentUser }) {
   }
 
 
-  return ( //outine outline-4 rounded  p-2 w-fit bg-gray-200 object-none object-center
+  return (
     <div className="drop-shadow w-1/5 min-w-min min-h-min bg-white m-3 rounded z-20 object-center ">
 
       <form className="w-96  " onSubmit={logInHandler}>
