@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 
+
 // Page Components
 import ParentPage from "./pages/ParentPage";
 import Home from "./pages/Home";
@@ -15,10 +16,6 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 
 import PageNotFound from "./pages/PageNotFound";
-
-//Keys
-import { EtherscanApiKey } from "./hooks/Keys";
-import { WhaleWatcherApiKey } from "./hooks/Keys";
 
 
 // Style Sheet
@@ -52,24 +49,24 @@ export default function App() {
         }
       })
   }
-  const getNewestWhaleTransaction = () => {
-    fetch('https://cors-anywhere.herokuapp.com/https://api.whale-alert.io/v1/status', {
-      headers: {
-        'Origin': 'http://localhost:4000', //Need to be changed for deployment
-        'Content-Type': 'application/json',
-        'X-WA-API-KEY': WhaleWatcherApiKey
-      }
-    }).then(r => r.json()).then(console.log)
-  }
+  // const getNewestWhaleTransaction = () => {
+  //   fetch('https://cors-anywhere.herokuapp.com/https://api.whale-alert.io/v1/status', {
+  //     headers: {
+  //       'Origin': 'http://localhost:4000', //Need to be changed for deployment
+  //       'Content-Type': 'application/json',
+  //       'X-WA-API-KEY': WhaleWatcherApiKey
+  //     }
+  //   }).then(r => r.json()).then(console.log)
+  // }
   const getLatestEthPrice = () => {
-    fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${EtherscanApiKey}`).then(res => res.json()).then(res => setCurrentEthPrice(res.result.ethusd))
+    fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${process.env.EtherscanApiKey}`).then(res => res.json()).then(res => setCurrentEthPrice(res.result.ethusd))
   }
 
   //On-page-load:
   useEffect(() => {
     getMeFetch()
     isLoggedIn() //Remove later (for development)
-    getNewestWhaleTransaction()
+    // getNewestWhaleTransaction()
     getLatestEthPrice()
   }, [])
   console.log(currentEthPrice)

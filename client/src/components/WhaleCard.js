@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { ethers } from "ethers";
 
-import { EtherscanApiKey } from "../hooks/Keys";
 
 export default function WhaleCard({wallet, currentEthPrice}) {
 
@@ -11,7 +10,7 @@ export default function WhaleCard({wallet, currentEthPrice}) {
   const boldFont = "font-semibold flex m-1 " //Wrapper element
   const normalFont = "font-normal flex mx-1"
 
-  const url = `https://api.etherscan.io/api?module=account&action=balance&address=${wallet.wallet_address}&tag=latest&apikey=${EtherscanApiKey}`
+  const url = `https://api.etherscan.io/api?module=account&action=balance&address=${wallet.wallet_address}&tag=latest&apikey=${process.env.EtherscanApiKey}`
   const formatedEthBalance = () => { return ethers.utils.formatUnits(walletBalance, 'ether')}
   
   const userWalletFetch = (e) => {
