@@ -14,6 +14,7 @@ export default function ContentPreview1({ currentUser, currentEthPrice }) {
       return (false)
     }
   }
+  console.log('test')
 
   const whalesFetch = (e) => {
     fetch('/whale_wallets', {
